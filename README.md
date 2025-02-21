@@ -10,9 +10,11 @@ This repository is based on:
 ## Instructions
 - Clone this repository into your project src folder
 - Build with colcon and source:
+  ```bash
   cd /home/ros2_ws # replace with your own workspace
   colcon build --symlink-install
   source install/setup.bash
+  ```
 - Launch with RViz and joint_state_publisher_gui
 ros2 launch mirobot_description mirobot_rviz_control.launch.py
 
@@ -43,7 +45,8 @@ winget install usbipd
 usbipd list
 - You should see an output like this:
 
-image.png
+![image](https://github.com/user-attachments/assets/98dd42f4-575b-42c4-b9ee-cd6f8ba17ce8)
+
 
 Look for "USB-SERIAL CH340", and note the BUSID. In this example, the BUSID is 2-6
 
@@ -58,7 +61,8 @@ usbipd attach --wsl --busid 2-6  # replace the busid number with your busid
 ls /dev/ttyUSB0
 This should return "/dev/ttyUSB0", as shown below. If nothing is returned, then something went wrong. Repeat the previous steps.
 
-image.png
+![image](https://github.com/user-attachments/assets/ac7591ee-c4fe-4f53-a8f1-dc6d147fffef)
+
 
 #### Launching our container with USB access
 Now that we have attached the USB to wsl, we can now launch our docker container with USB access.
@@ -70,7 +74,8 @@ This maps our USB device from WSL to our docker container.
 
 Once our container is up and running, we can check the mapping was successful:
 ls /dev/ttyUSB0
-image.png
+
+![image](https://github.com/user-attachments/assets/81215be2-427b-4810-88d3-591677579baa)
 
  
 
