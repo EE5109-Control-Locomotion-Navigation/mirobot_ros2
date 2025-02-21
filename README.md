@@ -16,8 +16,9 @@ This repository is based on:
   source install/setup.bash
   ```
 - Launch with RViz and joint_state_publisher_gui
+```bash
 ros2 launch mirobot_description mirobot_rviz_control.launch.py
-
+```
 You can now control the mirobot with the joint_state_publisher_gui
 
 ## Dependencies
@@ -40,7 +41,9 @@ Put simply, usbipd is a tool that maps the windows USB port addresses to WSL. Fr
 
 - Open a Windows Powershell as an Administrator
 - Install usbipd with winget:
+```bash
 winget install usbipd
+```
 - List the USB devices on your system by typing
 usbipd list
 - You should see an output like this:
@@ -52,13 +55,18 @@ Look for "USB-SERIAL CH340", and note the BUSID. In this example, the BUSID is 2
 
 The next step is to bind the BUSID to WSL. I don't know what this means either. 
 - Open a Powershell as an Administrator and run:
+```bash
 usbipd bind --busid 2-6  # replace the busid number with your busid.
+```
 - Once this step is done, we will attach the busid to wsl. Again, not what the difference between attach and bind is, but apparently this is what's needed...
+```bash
 usbipd attach --wsl --busid 2-6  # replace the busid number with your busid
+```
 - Verify this operation was successful by opening a wsl terminal, and check the following:
 - In a cmd or powershell window, type "wsl". Then, run the following:
-
+```bash
 ls /dev/ttyUSB0
+```
 This should return "/dev/ttyUSB0", as shown below. If nothing is returned, then something went wrong. Repeat the previous steps.
 
 ![image](https://github.com/user-attachments/assets/ac7591ee-c4fe-4f53-a8f1-dc6d147fffef)
@@ -69,12 +77,15 @@ Now that we have attached the USB to wsl, we can now launch our docker container
 
 Build the supplied docker as usual
 When we run our container, we need to add an extra term "--device=/dev/ttyUSB0:/dev/ttyUSB0"
+```bash
 docker run -it --rm --privileged --name mirobot_container -e DISPLAY=host.docker.internal:0.0 --env="QT_X11_NO_MITSHM=1" --device=/dev/ttyUSB0:/dev/ttyUSB0 -v C:\Users\0109491s\PycharmProjects\EE5109\mirobot\mirobot_ros2\mirobot_ros2\src:/home/ros2_ws/src mirobot_container
+```
 This maps our USB device from WSL to our docker container.
 
 Once our container is up and running, we can check the mapping was successful:
+```bash
 ls /dev/ttyUSB0
-
+```
 ![image](https://github.com/user-attachments/assets/81215be2-427b-4810-88d3-591677579baa)
 
  
@@ -82,4 +93,6 @@ ls /dev/ttyUSB0
 Again, if this command returns nothing, something has gone wrong, repeat the previous steps.
 
 Finally, we need to give read/write access to the USB drive. We do this by the following command:
+```bash
 chmod +x /dev/ttyUSB0
+```
