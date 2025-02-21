@@ -78,7 +78,7 @@ Now that we have attached the USB to wsl, we can now launch our docker container
 Build the supplied docker as usual
 When we run our container, we need to add an extra term "--device=/dev/ttyUSB0:/dev/ttyUSB0"
 ```bash
-docker run -it --rm --privileged --name mirobot_container -e DISPLAY=host.docker.internal:0.0 --env="QT_X11_NO_MITSHM=1" --device=/dev/ttyUSB0:/dev/ttyUSB0 -v C:\Users\0109491s\PycharmProjects\EE5109\mirobot\mirobot_ros2\mirobot_ros2\src:/home/ros2_ws/src mirobot_container
+docker run -it --rm --privileged --name mirobot_container -e DISPLAY=host.docker.internal:0.0 --env="QT_X11_NO_MITSHM=1" --device=/dev/ttyUSB0:/dev/ttyUSB0 -v .\mirobot_ros2\src:/home/ros2_ws/src mirobot_container
 ```
 This maps our USB device from WSL to our docker container.
 
